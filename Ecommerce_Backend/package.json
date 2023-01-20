@@ -1,0 +1,27 @@
+{
+  "name": "node_ts_name",
+  "version": "0.0.1",
+  "description": "Project Description",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "tsc && node ./dist/index.js",
+    "dev": "tsnd --respawn src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Git_Repo"
+  },
+  "keywords": [
+    "_"
+  ],
+  "author": "AuthorName",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.15",
+    "ts-node-dev": "^2.0.0"
+  }
+}
