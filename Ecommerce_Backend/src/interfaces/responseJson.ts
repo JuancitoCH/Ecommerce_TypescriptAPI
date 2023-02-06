@@ -1,4 +1,4 @@
-export type responseJson={
+export interface responseJsonInterface{
     status:number,
     success:boolean,
     error?: {
@@ -6,3 +6,4 @@ export type responseJson={
     },
     data?:object
 }
+

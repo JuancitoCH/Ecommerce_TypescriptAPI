@@ -1,9 +1,9 @@
 import {Request,Response,NextFunction} from 'express'
-import { responseJson } from '../../Types/responseJson'
+import { responseJsonInterface } from '../../interfaces/responseJson'
 
 
 export default (req:Request,res:Response,next:NextFunction)=>{
-    const response : responseJson = {
+    const response : responseJsonInterface = {
         status:404,
         success:false,
         error:{
