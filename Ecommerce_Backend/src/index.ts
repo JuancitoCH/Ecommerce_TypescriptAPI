@@ -5,7 +5,7 @@ import envs from "./config/envs";
 prisma.$connect()
 .then(()=>{
     app.listen(envs.PORT,()=>{
-        console.log('[💻 Server ]: Server Listen in Port '+envs.PORT)
+        console.log('[💻 Server ]: Server Listen in http://localhost:'+envs.PORT)
     })
 })
 .catch(err=>{
