@@ -9,3 +9,32 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model User{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String @unique
+  password String
+}
+
+model Products{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  stock Int
+  price Float
+  description String
+  available Boolean
+  tags String
+}
+
+model Tags {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+}
+
+model Sales{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_user String
+  id_products String
+  details String
+  amount Float
+}
