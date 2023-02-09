@@ -6,7 +6,7 @@ import initRouter from './routes/init.routes'
 import userRouter from './routes/user.routes'
 
 const app = express()
-
+app.use(express.json())
 // Routers
 app.use(initRouter)
 app.use('/user',userRouter)

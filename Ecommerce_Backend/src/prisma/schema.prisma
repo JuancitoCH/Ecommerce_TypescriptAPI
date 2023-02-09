@@ -23,6 +23,7 @@ model Products{
   price Float
   description String
   available Boolean
+  // because i decide to use prisma, i will use a string as an array
   tags String
 }
 
