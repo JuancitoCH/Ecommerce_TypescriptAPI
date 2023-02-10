@@ -9,10 +9,19 @@ const UserService = {
     query:new UserRepository(),
 
     async create(data:UserInterface){
-        if(data == undefined) throw new ErrorStatus("und")
-        const result = await this.query.create(data)
-        return ServiceResponse(result,statusCodes.CREATED,true)
+        if(data == undefined) throw new ErrorStatus("You must include the fields email and password")
+        return await this.query.create(data)
     },
+    async getAll(){
+        return {result :await this.query.getAll()}
+    },
+    async getByEmail(data:UserInterface){
+        if(!data.email) throw new ErrorStatus("Validation: You must provide an email",statusCodes.BADREQUEST)
+        return await this.query.getOne({
+            email:data.email,
+            password:''
+        })
+    }
 }
 
 export default UserService

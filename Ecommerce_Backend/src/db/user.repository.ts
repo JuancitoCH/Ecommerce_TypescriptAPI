@@ -19,7 +19,7 @@ class UserRepository implements  Dbrepository{
             }
         })
     }
-    async getAll(userData:UserInterface):Promise< UserInterface[] | null>{
+    async getAll():Promise< UserInterface[] | null>{
         return await prisma.user.findMany()
     }
     async deleteOne(userData:UserInterface):Promise< UserInterface | null>{

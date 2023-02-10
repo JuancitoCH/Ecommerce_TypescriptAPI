@@ -1,4 +1,5 @@
 import { responseJsonInterface } from "../interfaces/responseJson";
+import { Response } from "express"
 
 enum statusCodes{
     OK = 200,
@@ -18,6 +19,13 @@ export function ServiceResponse(data:object,code:statusCodes,success:boolean){
         data,
     }
     return response
+}
+
+export function ControllerResponse(code:statusCodes,res: Response){
+    return (result:object)=>{
+        const restoSend = ServiceResponse(result, code, true)
+        return res.status(restoSend.status).json(restoSend)
+    }
 }
 
 export default statusCodes
