@@ -1,7 +1,7 @@
 import UserRepository from "../db/user.repository"
 import { ErrorStatus } from "../errors/ErrorStatus"
 import statusCodes, { ServiceResponse } from "../helpers/statusResponse"
-import {UserInterface} from "../interfaces/tables"
+import {UserInterface, UserInterfaceOptional} from "../interfaces/tables"
 
 // tenemos que verificar que las operaciones de creacion fueron correctas
 // y manejar los errores que surjan
@@ -15,11 +15,10 @@ const UserService = {
     async getAll(){
         return {result :await this.query.getAll()}
     },
-    async getByEmail(data:UserInterface){
+    async getByEmail(data:UserInterfaceOptional){
         if(!data.email) throw new ErrorStatus("Validation: You must provide an email",statusCodes.BADREQUEST)
         return await this.query.getOne({
             email:data.email,
-            password:''
         })
     }
 }

@@ -3,6 +3,11 @@ export interface UserInterface{
     email:string,
     password:string
 }
+export interface UserInterfaceOptional{
+    id?:string
+    email?:string,
+    password?:string
+}
 
 interface ProductsInterface {
     id?: string;

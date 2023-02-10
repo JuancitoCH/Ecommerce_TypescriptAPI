@@ -1,6 +1,6 @@
 import prisma from "../config/db";
 import Dbrepository from "../interfaces/dbRepository";
-import {UserInterface} from "../interfaces/tables";
+import {UserInterface, UserInterfaceOptional} from "../interfaces/tables";
 
 class UserRepository implements  Dbrepository{
 
@@ -12,7 +12,7 @@ class UserRepository implements  Dbrepository{
         })
     }
     
-    async getOne(userData:UserInterface):Promise< UserInterface | null>{
+    async getOne(userData:UserInterfaceOptional):Promise< UserInterface | null>{
         return await prisma.user.findFirst({
             where:{
                 ...userData
