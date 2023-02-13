@@ -1,9 +1,11 @@
 import { Router } from "express";
 import { ErrorStatus } from "../errors/ErrorStatus";
+import isLoged from "../middlewares/auth";
+
 
 const initRouter = Router()
 
-initRouter.get('/',(req,res)=>{
+initRouter.get('/',isLoged,(req,res)=>{
     throw new ErrorStatus("This Server don't have routes",500)
 })
 

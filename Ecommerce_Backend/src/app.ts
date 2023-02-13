@@ -17,6 +17,7 @@ app.use(initRouter)
 app.use('/user',userRouter)
 app.use('/auth',authRouter)
 
+
 // Error Handlers
 app.use(ErrorHandler)
 app.use(NotFound)

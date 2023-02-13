@@ -59,6 +59,8 @@ export function CookieResponseEmpty(code: statusCodes, res: Response) {
                     secure: true,
                     sameSite: 'none'
                 }),
+                // añadir expiracion para ahora
+                // expires:
             }).json(restosend)
     }
 }
