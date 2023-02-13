@@ -15,7 +15,7 @@ enum statusCodes {
 }
 
 
-export function ServiceResponse(data: object, code: statusCodes, success: boolean) {
+export function ServiceResponse(data: object | undefined, code: statusCodes, success: boolean) {
     const response: responseJsonInterface = {
         status: code,
         success,
@@ -49,6 +49,18 @@ export function CookieResponse(code: statusCodes, res: Response) {
     }
 }
 
-
+export function CookieResponseEmpty(code: statusCodes, res: Response) {
+    return () => {
+        const restosend = ServiceResponse(undefined,statusCodes.OK,true)
+        return res.status(restosend.status)
+            .cookie('token', "", {
+                httpOnly: true,
+                ...(envs.node_mode !== 'development') && ({
+                    secure: true,
+                    sameSite: 'none'
+                }),
+            }).json(restosend)
+    }
+}
 
 export default statusCodes
