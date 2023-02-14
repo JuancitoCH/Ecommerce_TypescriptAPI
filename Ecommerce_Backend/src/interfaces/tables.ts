@@ -1,12 +1,16 @@
+export type Permissions = "ADMIN" | "USER"
+
 export interface UserInterface{
     id?:string
     email:string,
-    password:string
+    password:string,
+    permission?:Permissions
 }
 export interface UserInterfaceOptional{
     id?:string
     email?:string,
-    password?:string
+    password?:string,
+    permission?:Permissions
 }
 
 export interface ProductsInterface {

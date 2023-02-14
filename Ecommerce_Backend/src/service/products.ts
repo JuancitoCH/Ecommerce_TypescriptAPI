@@ -2,7 +2,7 @@ import envs from "../config/envs"
 import ProductsRepository from "../db/products.repository"
 import { ErrorStatus } from "../errors/ErrorStatus"
 import statusCodes from "../helpers/statusResponse"
-import { ProductsInterface } from "../interfaces/tables"
+import { ProductsInterface, ProductsInterfaceOptional } from "../interfaces/tables"
 
 interface Options extends Object{
     page?:number,
@@ -17,8 +17,6 @@ const ProductsService = {
         // Comprobar todos los campos
         // Aunque no hace falta en cara al publico
         const product = await this.query.create(data)
-        console.log(product)
-
         return product
     },
     async getFilterPagination(options:Options = { page:1, limit:10 }){
@@ -47,6 +45,12 @@ const ProductsService = {
             pages,
             quantity:count
         }
+    },
+    async update( productToUp:ProductsInterfaceOptional,data:ProductsInterfaceOptional  ){
+        if(!productToUp && !("idProduct" in productToUp) ) throw new ErrorStatus("Validation : You must include the product id on the url")
+        
+        const product = await this.query.updateOne(productToUp,data)
+        return product
     },
 }
 

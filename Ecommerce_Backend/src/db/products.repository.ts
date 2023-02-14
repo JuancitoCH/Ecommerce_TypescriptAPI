@@ -49,10 +49,10 @@ class ProductsRepository implements  Dbrepository{
             }
         })
     }
-    async updateOne(productData:ProductsInterfaceOptional,data:ProductsInterfaceOptional):Promise< ProductsInterface | null>{
+    async updateOne(productToUp:ProductsInterfaceOptional,data:ProductsInterfaceOptional):Promise< ProductsInterface | null>{
         return await prisma.products.update({
             where:{
-                ...productData
+                ...productToUp
             },
             data
         })

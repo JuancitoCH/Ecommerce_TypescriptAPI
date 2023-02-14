@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { productController } from "../controller/products.controller";
-import isLoged from "../middlewares/auth";
+import isLoged, { isAdmin } from "../middlewares/auth";
 
 
 const productRouter = Router()
 
-productRouter.post('/create',isLoged,productController.create)
-productRouter.get('/',isLoged,productController.getFilterPagination)
+productRouter.post('/create',isAdmin,productController.create)
+productRouter.patch('/update/:idProduct',isAdmin,productController.update)
+productRouter.get('/',productController.getFilterPagination)
 
 
 export default productRouter

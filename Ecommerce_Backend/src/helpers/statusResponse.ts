@@ -15,7 +15,7 @@ enum statusCodes {
 }
 
 
-function ServiceResponse(data: object | undefined, code: statusCodes, success: boolean) {
+function ServiceResponse(data: object | undefined| null, code: statusCodes, success: boolean) {
     const response: responseJsonInterface = {
         status: code,
         success,
@@ -25,7 +25,7 @@ function ServiceResponse(data: object | undefined, code: statusCodes, success: b
 }
 
 export function ControllerResponse(code: statusCodes, res: Response) {
-    return (result: object) => {
+    return (result: object|null) => {
         const restoSend = ServiceResponse(result, code, true)
         return res.status(restoSend.status).json(restoSend)
     }

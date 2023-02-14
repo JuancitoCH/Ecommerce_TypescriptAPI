@@ -9,6 +9,7 @@ const UserService = {
     query:new UserRepository(),
 
     async create(data:UserInterface){
+        delete data.permission
         if(data == undefined) throw new ErrorStatus("You must include the fields email and password")
         return await this.query.create(data)
     },

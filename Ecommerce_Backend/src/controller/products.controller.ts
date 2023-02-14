@@ -11,6 +11,11 @@ export const productController = {
             .then( ControllerResponse(statusCodes.CREATED,res) )
             .catch(next)
     },
+    update: (req: Request, res: Response, next: NextFunction) => {
+        ProductsService.update({id:req.params.idProduct},req.body)
+            .then( ControllerResponse(statusCodes.OK,res) )
+            .catch(next)
+    },
     getFilterPagination: (req: Request, res: Response, next: NextFunction) => {
         ProductsService.getFilterPagination(req.query)
             .then( ControllerResponse(statusCodes.CREATED,res) )

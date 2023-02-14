@@ -4,6 +4,6 @@ export interface responseJsonInterface{
     error?: {
         message:string,
     },
-    data?:object
+    data?:object | null
 }
 

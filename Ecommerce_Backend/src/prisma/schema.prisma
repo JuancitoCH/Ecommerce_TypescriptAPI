@@ -10,10 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Permission{
+  ADMIN
+  USER
+}
+
 model User{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   email String @unique
   password String
+  permission Permission @default(USER)
 }
 
 model Products{

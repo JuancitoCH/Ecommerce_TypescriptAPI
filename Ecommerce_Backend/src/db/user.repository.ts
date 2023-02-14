@@ -2,6 +2,8 @@ import prisma from "../config/db";
 import Dbrepository from "../interfaces/dbRepository";
 import {UserInterface, UserInterfaceOptional} from "../interfaces/tables";
 
+
+
 class UserRepository implements  Dbrepository{
 
     async create(userData:UserInterface):Promise< UserInterface >{
