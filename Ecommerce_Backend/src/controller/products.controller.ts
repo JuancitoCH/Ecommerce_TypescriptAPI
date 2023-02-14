@@ -11,8 +11,8 @@ export const productController = {
             .then( ControllerResponse(statusCodes.CREATED,res) )
             .catch(next)
     },
-    getAll: (req: Request, res: Response, next: NextFunction) => {
-        ProductsService.getAll(req.query)
+    getFilterPagination: (req: Request, res: Response, next: NextFunction) => {
+        ProductsService.getFilterPagination(req.query)
             .then( ControllerResponse(statusCodes.CREATED,res) )
             .catch(next)
     },

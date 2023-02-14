@@ -19,17 +19,26 @@ class ProductsRepository implements  Dbrepository{
             }
         })
     }
-    async getAll(filters?:object ):Promise< ProductsInterface[] | null>{
+    async getAll(filters?:object ,tag?:string):Promise< ProductsInterface[] | null>{
         // capaz de filtrar y paginar
         return await prisma.products.findMany({
-            ...filters
+            ...filters,
+            where:{
+                tags:{
+                    contains:tag
+                }
+            }
         })
     }
-    async count(filters?:object):Promise< number >{
+    async count(filters?:object,tag?:string):Promise< number >{
         // capaz de filtrar y paginar
         return await prisma.products.count({
             where:{
-                ...filters
+                ...filters,
+                tags:{
+                    contains:tag
+                }
+
             }
         })
     }

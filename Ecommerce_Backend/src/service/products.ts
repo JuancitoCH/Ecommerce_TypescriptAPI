@@ -21,29 +21,30 @@ const ProductsService = {
 
         return product
     },
-    async getAll(options?:Options){
-        // verificar que no sean negativos los campos o pasarlos a posi
-        // pasar y verificar los string
-        console.log(options)
-        // Logica de paginacion y filtros
-        // skip
-        // take
+    async getFilterPagination(options:Options = { page:1, limit:10 }){
 
-        // Logic url enviroment
+        if(options.page != undefined && options.page < 1)throw new Error("Validation : The page param must be greater than 0")
         let url = envs.url_deployed
-        // /products?page=3&limit=5&tag=manzana
         if (envs.node_mode!="production" && envs.PORT!=undefined)url += envs.PORT
 
-        const count = await this.query.count()
+        const count = await this.query.count(undefined,options.tag)
         const product = await this.query.getAll({
-            skip:options?.page && options?.limit ? (options?.page -1) * options?.limit : undefined,
-            take:options?.limit && options?.limit * 1
-        })
+            skip:options?.page && options?.limit ? (options?.page -1) * options?.limit : 10,
+            take:options?.limit && options?.limit * 1,
+        },options.tag)
+
+        let pageP = options?.page ? options.page*1 : 1
+        let limitP = options?.limit ? options.limit*1 : 10
+        let pages = Math.floor(count/limitP)
+        if(count % limitP > 0) pages+=1
+
+        const nextPage = pages >  pageP ? pageP +1 : null 
+        const prevPage = pages >= pageP ? pageP -1 : null
         return {
             result:product,
-            nextPage:`${url}/products?page=${1}&limit=${10}`,
-            prevPage:`${url}/products?page=${1}&limit=${10}`,
-            pages:"",
+            nextPage:nextPage &&`${url}/products?page=${nextPage}&limit=${limitP}`,
+            prevPage:prevPage ? `${url}/products?page=${prevPage}&limit=${limitP}`:null,
+            pages,
             quantity:count
         }
     },

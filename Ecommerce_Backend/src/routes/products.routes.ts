@@ -6,7 +6,7 @@ import isLoged from "../middlewares/auth";
 const productRouter = Router()
 
 productRouter.post('/create',isLoged,productController.create)
-productRouter.get('/',isLoged,productController.getAll)
+productRouter.get('/',isLoged,productController.getFilterPagination)
 
 
 export default productRouter
