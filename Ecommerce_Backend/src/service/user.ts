@@ -1,6 +1,6 @@
 import UserRepository from "../db/user.repository"
 import { ErrorStatus } from "../errors/ErrorStatus"
-import statusCodes, { ServiceResponse } from "../helpers/statusResponse"
+import statusCodes from "../helpers/statusResponse"
 import {UserInterface, UserInterfaceOptional} from "../interfaces/tables"
 
 // tenemos que verificar que las operaciones de creacion fueron correctas

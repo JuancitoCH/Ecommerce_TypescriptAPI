@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 
 import initRouter from './routes/init.routes'
 import userRouter from './routes/user.routes'
+import productRouter from './routes/products.routes'
 
 
 const app = express()
@@ -16,6 +17,7 @@ app.use(cookieParser())
 app.use(initRouter)
 app.use('/user',userRouter)
 app.use('/auth',authRouter)
+app.use('/products',productRouter)
 
 
 // Error Handlers

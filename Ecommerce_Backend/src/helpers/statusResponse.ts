@@ -15,7 +15,7 @@ enum statusCodes {
 }
 
 
-export function ServiceResponse(data: object | undefined, code: statusCodes, success: boolean) {
+function ServiceResponse(data: object | undefined, code: statusCodes, success: boolean) {
     const response: responseJsonInterface = {
         status: code,
         success,

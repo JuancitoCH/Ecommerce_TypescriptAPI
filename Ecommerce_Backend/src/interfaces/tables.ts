@@ -9,7 +9,7 @@ export interface UserInterfaceOptional{
     password?:string
 }
 
-interface ProductsInterface {
+export interface ProductsInterface {
     id?: string;
     name: string;
     stock: number;
@@ -18,15 +18,24 @@ interface ProductsInterface {
     available: boolean;
     tags: string;
 }
+export interface ProductsInterfaceOptional {
+    id?: string;
+    name?: string;
+    stock?: number;
+    price?: number;
+    description?: string;
+    available?: boolean;
+    tags?: string;
+}
 
-interface SalesInterface {
+export interface SalesInterface {
     id?: string;
     id_user: string;
     id_products: string;
     details: string;
     amount: number;
 }
-interface TagsInterface {
+export interface TagsInterface {
     id?: string;
     name: string;
 }
