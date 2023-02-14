@@ -12,7 +12,14 @@ export const productController = {
             .catch(next)
     },
     update: (req: Request, res: Response, next: NextFunction) => {
-        ProductsService.update({id:req.params.idProduct},req.body)
+        ProductsService.update({id:req.params.idProduct},req.body,req.query.replace as string)
+            .then( ControllerResponse(statusCodes.OK,res) )
+            .catch(next)
+    },
+    getOneByID: (req: Request, res: Response, next: NextFunction) => {
+        ProductsService.getOne({
+            id:req.params.idProduct
+        })
             .then( ControllerResponse(statusCodes.OK,res) )
             .catch(next)
     },

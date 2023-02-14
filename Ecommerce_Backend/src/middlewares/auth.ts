@@ -9,7 +9,6 @@ export default function isLoged(req: Request, res: Response, next: NextFunction)
     if (!req.cookies.token) throw new ErrorStatus("Validation : Unhautorized You must be Logged",statusCodes.UNAHUTORIZED)
     const tokenDec = jwtVerifyDecode(req.cookies.token) as UserInterface
     // UserInterface & {iat:Date,exp:Date}
-    console.log(tokenDec)
     if(
         !tokenDec.id ||
         !tokenDec.email ||
@@ -21,7 +20,7 @@ export function isAdmin(req: Request, res: Response, next: NextFunction){
     if (!req.cookies.token) throw new ErrorStatus("Validation : Unhautorized You must be Logged",statusCodes.UNAHUTORIZED)
     const tokenDec = jwtVerifyDecode(req.cookies.token) as UserInterface
     // UserInterface & {iat:Date,exp:Date}
-    console.log(tokenDec)
+
     if(
         !tokenDec.id ||
         !tokenDec.email ||

@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client"
+
 export type Permissions = "ADMIN" | "USER"
 
 export interface UserInterface{
@@ -14,32 +16,34 @@ export interface UserInterfaceOptional{
 }
 
 export interface ProductsInterface {
-    id?: string;
-    name: string;
-    stock: number;
-    price: number;
-    description: string;
-    available: boolean;
-    tags: string;
+    id?: string,
+    name: string,
+    stock: number,
+    price: number,
+    description: string,
+    available: boolean,
+    tags: string,
+    images?:Prisma.JsonValue | null
 }
 export interface ProductsInterfaceOptional {
-    id?: string;
-    name?: string;
-    stock?: number;
-    price?: number;
-    description?: string;
-    available?: boolean;
-    tags?: string;
+    id?: string,
+    name?: string,
+    stock?: number,
+    price?: number,
+    description?: string,
+    available?: boolean,
+    tags?: string,
+    images?:Prisma.JsonNullableFilter | undefined
 }
 
 export interface SalesInterface {
-    id?: string;
-    id_user: string;
-    id_products: string;
-    details: string;
-    amount: number;
+    id?: string,
+    id_user: string,
+    id_products: string,
+    details: string,
+    amount: number,
 }
 export interface TagsInterface {
-    id?: string;
-    name: string;
+    id?: string,
+    name: string,
 }

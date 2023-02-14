@@ -31,6 +31,7 @@ model Products{
   available Boolean
   // because i decide to use prisma, i will use a string as an array
   tags String
+  images Json?
 }
 
 model Tags {

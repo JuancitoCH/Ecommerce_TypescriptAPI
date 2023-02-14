@@ -54,7 +54,7 @@ class ProductsRepository implements  Dbrepository{
             where:{
                 ...productToUp
             },
-            data
+            data,
         })
     }
 }

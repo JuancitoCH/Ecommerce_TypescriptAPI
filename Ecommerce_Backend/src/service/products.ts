@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client"
 import envs from "../config/envs"
 import ProductsRepository from "../db/products.repository"
 import { ErrorStatus } from "../errors/ErrorStatus"
@@ -10,12 +11,30 @@ interface Options extends Object{
     tag?:string
 }
 
+interface imagesOb extends Object{
+    product:string[],
+    subimages:string[],
+}
+
 const ProductsService = {
     query:new ProductsRepository(),
 
     async create(data:ProductsInterface){
-        // Comprobar todos los campos
-        // Aunque no hace falta en cara al publico
+        if(
+            !data.available ||
+            !data.description ||
+            !data.name ||
+            !data.price ||
+            !data.stock ||
+            !data.tags
+        ) throw new ErrorStatus(`
+        Validation : You must include this fields : 
+        name: string;
+        stock: number;
+        price: number;
+        description: string;
+        available: boolean;
+        tags: string; `,statusCodes.BADREQUEST)
         const product = await this.query.create(data)
         return product
     },
@@ -27,7 +46,7 @@ const ProductsService = {
 
         const count = await this.query.count(undefined,options.tag)
         const product = await this.query.getAll({
-            skip:options?.page && options?.limit ? (options?.page -1) * options?.limit : 10,
+            skip:options?.page && options?.limit ? (options?.page -1) * options?.limit : 0,
             take:options?.limit && options?.limit * 1,
         },options.tag)
 
@@ -46,9 +65,30 @@ const ProductsService = {
             quantity:count
         }
     },
-    async update( productToUp:ProductsInterfaceOptional,data:ProductsInterfaceOptional  ){
+    async getOne(data:ProductsInterfaceOptional){
+        if( Object.entries(data).length === 0 ) throw new ErrorStatus("Validation : You must include the fields requested for find the product")
+        const product = await this.query.getOne(data)
+        if(product === null) throw new ErrorStatus("Search : Product not Found",statusCodes.NOTFOUND)
+        return product
+    },
+
+    async update( productToUp:ProductsInterfaceOptional,data:ProductsInterfaceOptional, replace?:string  ){
         if(!productToUp && !("idProduct" in productToUp) ) throw new ErrorStatus("Validation : You must include the product id on the url")
+        const productInfo = await this.getOne(productToUp)
+        if(!productInfo) throw new ErrorStatus("Validation : product not found ",statusCodes.BADREQUEST)
+        // this logic is for format the fields and verify to prisma
+        if(data.images){
+            const prForamte = productInfo?.images as unknown as imagesOb
+            const daForamte = data.images as unknown as imagesOb
+            if(daForamte.product || daForamte.subimages ){
+                    data.images = {
+                        product:[...prForamte.product ?? [], ... daForamte.product ?? []],
+                        subimages:[...prForamte.subimages ?? [], ... daForamte.subimages ?? []],
         
+                    } as Prisma.JsonObject
+            }else if(replace !== "yes"){ delete data.images }
+        }
+
         const product = await this.query.updateOne(productToUp,data)
         return product
     },
