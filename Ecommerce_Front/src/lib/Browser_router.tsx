@@ -4,6 +4,7 @@ import NotFound from '../pages/NotFound';
 import {
   createBrowserRouter,
 } from "react-router-dom";
+import TestStripe from '../pages/TestStripe';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
   {
     path: '*',
     element: <NotFound />
+  },
+  {
+    path: '/stripe',
+    element: <TestStripe />
   }
 ]);
 
