@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import statusCodes from "../../helpers/statusResponse";
 // import { match } from "assert";
 
 export default function PrismaErrorManage(error:any){
@@ -18,6 +19,10 @@ export default function PrismaErrorManage(error:any){
     else if(error instanceof Prisma.PrismaClientKnownRequestError){
         // match(error.message,/Authentication failed/)
         error.message= error.meta?.message as string
+        if(error.code=="P2023") {
+            // el ANY se podra cambiar?
+            (error as any).statusCode = statusCodes.BADREQUEST
+            error.message = "Invalid ID : You must include a Valid ID" }
     }
     // console.error(error)
 }

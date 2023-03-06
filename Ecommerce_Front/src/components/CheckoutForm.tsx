@@ -3,7 +3,8 @@ import {
   PaymentElement,
   LinkAuthenticationElement,
   useStripe,
-  useElements
+  useElements,
+  AddressElement
 } from "@stripe/react-stripe-js";
 
 export default function CheckoutForm() {
@@ -61,8 +62,10 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
+        receipt_email:email,
+        
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
+        return_url: "http://localhost:5173/",
       },
     });
 
@@ -90,10 +93,18 @@ export default function CheckoutForm() {
         id="link-authentication-element"
         onChange={(e:any) => setEmail(e.target.value)}
       />
+            
       <PaymentElement id="payment-element" options={{
-        layout:"tabs"
+        layout:"accordion",
+        fields:{
+          billingDetails:{
+            address:"auto",
+          }
+        }
       }} />
-      {/* <input type="text" name="adress" placeholder="Adress" /> */}
+      {/* <AddressElement options={{
+        mode:"billing",
+      }}/> */}
       <button disabled={isLoading || !stripe || !elements} id="submit">
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}

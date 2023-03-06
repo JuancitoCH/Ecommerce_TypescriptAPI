@@ -19,6 +19,7 @@ export interface ProductsInterface {
     id?: string,
     name: string,
     stock: number,
+    // price are in cents
     price: number,
     description: string,
     available: boolean,
@@ -29,6 +30,7 @@ export interface ProductsInterfaceOptional {
     id?: string,
     name?: string,
     stock?: number,
+    // price are in cents
     price?: number,
     description?: string,
     available?: boolean,
