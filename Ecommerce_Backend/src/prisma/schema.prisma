@@ -42,7 +42,13 @@ model Tags {
 model Sales{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   id_user String
-  id_products String
+  products Json //Array of {id_Products and amount}
   details String
   amount Float
+}
+
+model Carts{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id_user String
+  products Json //Array of {id_Products and amount}
 }
