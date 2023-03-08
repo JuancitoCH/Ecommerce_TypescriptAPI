@@ -10,7 +10,7 @@ export default function TestStripe() {
 
     useEffect(() => {
       // Create PaymentIntent as soon as the page loads
-      fetch("http://localhost:4000/stripe/create-payment-intent", {
+      fetch("http://localhost:4000/pay/stripe/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ product:{id:"63ebf6ede701357881a79a20",quantity:2} }),

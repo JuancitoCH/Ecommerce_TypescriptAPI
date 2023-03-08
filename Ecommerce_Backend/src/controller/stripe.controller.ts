@@ -38,7 +38,10 @@ export const stripeController = {
                 "payment_intent.created":()=>{console.log("Intento de creacion de pago creada")},
                 "charge.succeeded":()=>{
                     console.log("Charge succes")
+                    // detalles del cliente
                     console.log(stripe_body.data.object.billing_details)
+                    // detalle del producto
+                    console.log(stripe_body.data.object.metadata)
                 },
             }
             getProperty(StripeEventHandler,stripe_body.type)()
@@ -67,9 +70,9 @@ export const stripeController = {
                 amount: productDetails.price * product.quantity,
                 currency: "usd",
                 description:"An arbitrary string attached to the object. Often useful for displaying to users.",
-                // metadata:{
-                    
-                // },
+                metadata:{
+                    products:product.id
+                },
                 automatic_payment_methods: {
                   enabled: true,
                 },

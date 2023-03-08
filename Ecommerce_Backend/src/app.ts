@@ -7,7 +7,7 @@ import cookieParser from 'cookie-parser'
 import initRouter from './routes/init.routes'
 import userRouter from './routes/user.routes'
 import productRouter from './routes/products.routes'
-import stripeRouter from './routes/stripe.routes'
+import payRouter from './routes/pay.routes'
 
 import cors from 'cors'
 
@@ -23,7 +23,7 @@ app.use(initRouter)
 app.use('/user',userRouter)
 app.use('/auth',authRouter)
 app.use('/products',productRouter)
-app.use('/stripe',stripeRouter)
+app.use('/pay',payRouter)
 
 
 // Error Handlers
