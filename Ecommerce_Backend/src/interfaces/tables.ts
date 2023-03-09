@@ -38,14 +38,38 @@ export interface ProductsInterfaceOptional {
     images?:Prisma.JsonNullableFilter | undefined
 }
 
+
 export interface SalesInterface {
     id?: string,
     id_user: string,
-    id_products: string,
+    products: Prisma.JsonValue | Prisma.InputJsonValue  ,
     details: string,
     amount: number,
+}
+
+export interface SalesInterfaceOptional {
+    id?: string,
+    id_user?: string,
+    products?: Prisma.JsonFilter ,
+    details?: string,
+    amount?: number,
 }
 export interface TagsInterface {
     id?: string,
     name: string,
+}
+export interface TagsInterfaceOptional {
+    id?: string,
+    name?: string,
+}
+
+export interface CartInterface {
+    id?: string,
+    id_user:string,
+    products?:Prisma.JsonValue,
+}
+export interface CartInterfaceOptional {
+    id?: string,
+    id_user?:string,
+    products?:Prisma.JsonFilter,
 }

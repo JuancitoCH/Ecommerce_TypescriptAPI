@@ -50,5 +50,5 @@ model Sales{
 model Carts{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   id_user String
-  products Json //Array of {id_Products and amount}
+  products Json? //Array of {id_Products and amount}
 }
