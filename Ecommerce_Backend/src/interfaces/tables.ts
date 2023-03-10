@@ -42,6 +42,7 @@ export interface ProductsInterfaceOptional {
 export interface SalesInterface {
     id?: string,
     id_user: string,
+    // id Prod and Quantity
     products: Prisma.JsonValue | Prisma.InputJsonValue  ,
     details: string,
     amount: number,
@@ -50,6 +51,7 @@ export interface SalesInterface {
 export interface SalesInterfaceOptional {
     id?: string,
     id_user?: string,
+    // id Prod and Quantity
     products?: Prisma.JsonFilter ,
     details?: string,
     amount?: number,
@@ -66,10 +68,12 @@ export interface TagsInterfaceOptional {
 export interface CartInterface {
     id?: string,
     id_user:string,
+    // Array of objects { productId , quantity }
     products?:Prisma.JsonValue,
 }
 export interface CartInterfaceOptional {
     id?: string,
     id_user?:string,
-    products?:Prisma.JsonFilter,
+    // Array of objects { productId , quantity }
+    products?:Prisma.JsonValue,
 }

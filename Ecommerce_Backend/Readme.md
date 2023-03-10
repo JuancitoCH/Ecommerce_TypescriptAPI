@@ -6,7 +6,7 @@ Change, send the tag as an array para guardar y verificar nuevos tags
 
 
 ## Todo
-- 
+- añadir un campo booleano en sales para saber si se realizo el pago o no
 - Service for sales
 - Service for cart
 - Service for tags

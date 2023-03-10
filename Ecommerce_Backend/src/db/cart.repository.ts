@@ -13,10 +13,12 @@ export default class CartRepository implements Dbrepository{
         })
     }
     async getOne(CartData:CartInterfaceOptional):Promise< CartInterface | null>{
+        
         return await prisma.carts.findFirst({
             where:{
-                ...CartData
-            }
+                id_user:CartData.id_user,
+                id:CartData.id
+            },
         })
     }
     async getAll():Promise< CartInterface[] | null>{

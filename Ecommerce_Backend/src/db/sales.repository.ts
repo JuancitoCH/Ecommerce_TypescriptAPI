@@ -22,20 +22,20 @@ export default class SalesRepository implements Dbrepository{
         return await prisma.sales.findFirst({
             where:{
                 ...salesData
-            }
+            },
         })
     }
     async getAll():Promise< SalesInterface[] | null>{
         return await prisma.sales.findMany()
     }
-    async deleteOne(salesData:SalesInterface):Promise< SalesInterface | null>{
+    async deleteOne(salesData:SalesInterfaceOptional):Promise< SalesInterface | null>{
         return await prisma.sales.delete({
             where:{
                 ...salesData
             }
         })
     }
-    async updateOne(salesData:SalesInterface,data:SalesInterfaceOptional):Promise< SalesInterface | null>{
+    async updateOne(salesData:SalesInterfaceOptional,data:SalesInterfaceOptional):Promise< SalesInterface | null>{
         return await prisma.sales.update({
             where:{
                 ...salesData

@@ -20,6 +20,8 @@ model User{
   email String @unique
   password String
   permission Permission @default(USER)
+  cart Carts?
+  sales Sales[]
 }
 
 model Products{
@@ -41,14 +43,17 @@ model Tags {
 
 model Sales{
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  id_user String
-  products Json //Array of {id_Products and amount}
+  id_user String @db.ObjectId
+  products Json //Array of {id_Products and quantity}
   details String
   amount Float
+  // complete Boolean
+  user User @relation(fields: [id_user], references: [id])
 }
 
 model Carts{
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  id_user String
-  products Json? //Array of {id_Products and amount}
+  id_user String @db.ObjectId @unique
+  products Json? //Array of {productId and quantity}
+  user User @relation(fields: [id_user], references: [id])
 }
