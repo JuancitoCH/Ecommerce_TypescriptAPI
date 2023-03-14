@@ -13,7 +13,7 @@ class ProductsRepository implements  Dbrepository{
     }
     
     async getOne(productData:ProductsInterfaceOptional):Promise< ProductsInterface | null>{
-        return await prisma.products.findFirst({
+        return await prisma.products.findUnique({
             where:{
                 ...productData
             }

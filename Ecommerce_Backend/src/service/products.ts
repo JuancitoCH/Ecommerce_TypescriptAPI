@@ -66,7 +66,8 @@ const ProductsService = {
         }
     },
     async getOne(data:ProductsInterfaceOptional){
-        if( Object.entries(data).length === 0 ) throw new ErrorStatus("Validation : You must include the fields requested for find the product")
+        // if( Object.entries(data).length === 0 ) throw new ErrorStatus("Validation : You must include the fields requested for find the product")
+        if( !data.id  ) throw new ErrorStatus("Validation : You must include the fields requested for find the product")
         const product = await this.query.getOne(data)
         if(product === null) throw new ErrorStatus("Search : Product not Found",statusCodes.NOTFOUND)
         return product

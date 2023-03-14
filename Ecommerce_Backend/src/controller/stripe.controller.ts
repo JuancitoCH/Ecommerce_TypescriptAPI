@@ -2,9 +2,10 @@ import { Request, Response, NextFunction } from "express"
 import envs from "../config/envs";
 import statusCodes, { ControllerResponse } from "../helpers/statusResponse";
 import stripeImport from "stripe"
-import { ProductReqBody } from "../interfaces/payment";
 import { ErrorStatus } from "../errors/ErrorStatus";
-import ProductsService from "../service/products";
+
+import SalesService from "../service/sales";
+import { RequestUserData } from "../middlewares/auth";
 const stripe = new stripeImport(envs.stripe_sk as string,{apiVersion:"2022-11-15"});
 
 // REORGANIZAR TODO QUE ES UN DESASTRE
@@ -36,12 +37,14 @@ export const stripeController = {
             const StripeEventHandler={
                 "payment_intent.succeeded":()=>{console.log("pago Realizado correctamente")},
                 "payment_intent.created":()=>{console.log("Intento de creacion de pago creada")},
-                "charge.succeeded":()=>{
-                    console.log("Charge succes")
+                "charge.succeeded":async ()=>{
+                    console.log(stripe_body)
+                    console.log("Charge success")
                     // detalles del cliente
                     console.log(stripe_body.data.object.billing_details)
                     // detalle del producto
                     console.log(stripe_body.data.object.metadata)
+                    await SalesService.salePaied(stripe_body.data.object.metadata.sale)
                 },
             }
             getProperty(StripeEventHandler,stripe_body.type)()
@@ -51,44 +54,22 @@ export const stripeController = {
     },
     createPaymentIntent:async (req: Request, res: Response, next: NextFunction) => {
         try{
-            // const {datos} = req.body
-            const product :ProductReqBody | undefined = req.body.product
-            if(!product) throw new ErrorStatus("Invalid Products : you must include field product with at least id and quantity field",statusCodes.BADREQUEST)
-            console.log(req.body)
-            // Verificar campos de pasaje de datos
-            // obtener el producto por id y obtener el precio
-            // quantity valor absoluto
-            const productDetails = await ProductsService.getOne({id:product.id})
-            if(!productDetails) throw new ErrorStatus("Invalid Products : product not found",statusCodes.NOTFOUND)
-            if(typeof(product.quantity) !== "number" 
-            || product.quantity<1 
-            || product.quantity > productDetails.stock) throw new ErrorStatus("Invalid Products : Product Quantity must be a number and not overpass the stock",statusCodes.BADREQUEST)
-    
+            
+            const payOneDetails = await SalesService.payOneProduct((req as RequestUserData).userData.id,req.body)
             const paymentIntent = await stripe.paymentIntents.create({
                 // amount: calculateOrderAmount(items),
                 // amount are in cents
-                amount: productDetails.price * product.quantity,
+                amount: payOneDetails.amount,
                 currency: "usd",
-                description:"An arbitrary string attached to the object. Often useful for displaying to users.",
-                metadata:{
-                    products:product.id
-                },
+                description:payOneDetails.description,
+                metadata:payOneDetails.metadata,
                 automatic_payment_methods: {
                   enabled: true,
                 },
               });
               
-            //   devolver todos los datos utiles
-            // ej producto con su informacion completa
-            // 
               return res.status(200).json({
-                datos:{ items:[
-                    {
-                        name:"arroz",
-                        quatity:2,
-                        amount:2000,
-                    },
-                ]},
+                data:payOneDetails,
                 clientSecret: paymentIntent.client_secret,
               });
         }catch(e){next(e)}

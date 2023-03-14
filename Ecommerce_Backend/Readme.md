@@ -2,13 +2,16 @@ Delete the return message upon an not handling errror
 
 Change, send the tag as an array para guardar y verificar nuevos tags
 
+A tener en cuenta, typescript se confunde en algunas condiciones y en los switch si no agregamos {} o ;
 ## Todo Tests
 
 
 ## Todo
 - añadir un campo booleano en sales para saber si se realizo el pago o no
+- al pagar carrito verificar que la cantidad que pide el usuario no supere al stock disponible
+- Guardar la informacion del usuario en el req
 - Service for sales
-- Service for cart
+- Service for cart ( guardar productos como objetos con producto y  )
 - Service for tags
 - 
 - Route for cart

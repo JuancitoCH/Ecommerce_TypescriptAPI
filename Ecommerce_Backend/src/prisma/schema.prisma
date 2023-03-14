@@ -47,7 +47,7 @@ model Sales{
   products Json //Array of {id_Products and quantity}
   details String
   amount Float
-  // complete Boolean
+  statusPay Boolean @default(false)
   user User @relation(fields: [id_user], references: [id])
 }
 

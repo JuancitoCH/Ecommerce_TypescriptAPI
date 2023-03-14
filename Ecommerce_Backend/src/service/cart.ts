@@ -13,6 +13,8 @@ const CartService = {
             !data.id_user ||
             !data.products
         ) throw new ErrorStatus("validation fields : You must include the required fields")
+        // TODO: Verificar que los productos sea un array con objetos {id_Products and quantity}
+
         return await this.query.create(data)
     },
     async getOne(data:CartInterfaceOptional){

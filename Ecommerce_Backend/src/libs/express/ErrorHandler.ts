@@ -6,7 +6,7 @@ import PrismaErrorManage from '../prisma/error';
 
 export default (err:ErrorStatus,req:Request,res:Response,next:NextFunction)=>{
     // aqui handler errores de prisma ()
-    console.log(err)
+    console.error(err)
     PrismaErrorManage(err)
     const status = err.statusCode ?? 500;
 	const message = err.message ?? 'Internal server error';

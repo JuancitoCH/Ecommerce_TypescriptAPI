@@ -7,7 +7,8 @@
     "test": "tsc && dotenv -e .env.test -- jest",
     "start": "tsc && dotenv -e .env.production -- node ./dist/src/index.js",
     "dev": "dotenv -e .env.development -- tsnd --respawn src/index.ts",
-    "generate:mongo": "npx prisma generate"
+    "generate:mongo": "npx prisma generate",
+    "str_triger_sale":"stripe trigger charge.succeeded --add charge:metadata.sale=IDsALE"
   },
   "repository": {
     "type": "git",
