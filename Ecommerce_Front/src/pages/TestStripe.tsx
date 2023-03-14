@@ -13,7 +13,8 @@ export default function TestStripe() {
       fetch("http://localhost:4000/pay/stripe/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ product:{id:"63ebf6ede701357881a79a20",quantity:2} }),
+        credentials:"include",
+        body: JSON.stringify({id:"63ebf6ede701357881a79a20",quantity:2}),
         mode:"cors",
       })
         .then(res => {console.log(res)

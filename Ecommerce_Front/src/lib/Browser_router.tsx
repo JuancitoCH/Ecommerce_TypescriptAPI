@@ -5,6 +5,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import TestStripe from '../pages/TestStripe';
+import Login from '../pages/login';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/stripe',
     element: <TestStripe />
+  },
+  {
+    path:"/login",
+    element:<Login/>
   }
 ]);
 
