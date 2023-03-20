@@ -13,9 +13,11 @@ A tener en cuenta, typescript se confunde en algunas condiciones y en los switch
 - Service for sales
 - Service for cart ( guardar productos como objetos con producto y  )
 - Service for tags
-- 
+- s
 - Route for cart
-- 
+
+- seguir un pago que aun no se completo
+
 - ver como sera el reconocimiento del pedido del usuario( YASE ) cuando creamos el intento de pago creamos un pedido con todos los detalles, enviamos como metadata el id del pedido y este estara en "Modo no pagado" , guardamos la fecha del pedido y si al final del dia no fue efectivo lanzamos un evento que elimine todos los pedidos no pagados ( O LOS CONSERVAMOS COMO INFORMACION ?) Stripe guarda el payment intent creation o lo aprovechamos o lo implementamos
 - 
 - al usuario chargesucceded impactar la venta en sales

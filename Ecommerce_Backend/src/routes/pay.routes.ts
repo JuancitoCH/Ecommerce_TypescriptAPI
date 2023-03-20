@@ -6,6 +6,7 @@ const payRouter = Router()
 
 payRouter.post('/stripe/webhook',stripeController.webhook)
 payRouter.post('/stripe/create-payment-intent',isLoged,stripeController.createPaymentIntent)
+payRouter.get('/stripe/create-payment-intent-cart',isLoged,stripeController.createPaymentIntentCart)
 
 
 

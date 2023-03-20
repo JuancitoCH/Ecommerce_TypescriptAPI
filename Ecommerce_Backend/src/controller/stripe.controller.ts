@@ -74,4 +74,26 @@ export const stripeController = {
               });
         }catch(e){next(e)}
     },
+    createPaymentIntentCart:async (req: Request, res: Response, next: NextFunction) => {
+        try{
+            
+            const payOneDetails = await SalesService.payCartProducts((req as RequestUserData).userData.id)
+            const paymentIntent = await stripe.paymentIntents.create({
+                // amount: calculateOrderAmount(items),
+                // amount are in cents
+                amount: payOneDetails.amount,
+                currency: "usd",
+                description:payOneDetails.description,
+                metadata:payOneDetails.metadata,
+                automatic_payment_methods: {
+                  enabled: true,
+                },
+              });
+              
+              return res.status(200).json({
+                data:payOneDetails,
+                clientSecret: paymentIntent.client_secret,
+              });
+        }catch(e){next(e)}
+    },
 }

@@ -7,7 +7,7 @@ import ProductsService from "./products"
 
 // tenemos que verificar que las operaciones de creacion fueron correctas
 // y manejar los errores que surjan
-interface productsOnCart {
+export interface productsOnCart {
     productId:string,
     quantity:number
 }
