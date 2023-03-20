@@ -79,6 +79,26 @@ const CartService = {
             products:[]
         })
     }
+    ,async deleteOneProduct(idUser:string,productData:productsOnCart){
+        // TODO: verify productData info
+        // products data need to match quantity and id
+        if(!productData.productId && !productData.quantity) throw new ErrorStatus("Invalid Cart : you must include the productId and quantity fields")
+
+        const cart = await this.getOne({id_user:idUser})
+        const cartProducts = cart?.products as unknown as Array<productsOnCart>
+        let positionElementToDelete = -1
+        cartProducts.forEach((prod,i) => {
+            if(prod.productId == productData.productId && prod.quantity == productData.quantity) 
+            {positionElementToDelete = i };
+        });
+        if(positionElementToDelete ==-1) throw new ErrorStatus("Invalid Cart : product not found on user cart",statusCodes.NOTFOUND)
+
+        cartProducts.splice(positionElementToDelete,1)
+        return await this.update(idUser,{
+            products:cartProducts as unknown as Prisma.JsonValue
+        })
+    }
+    
 }
 
 export default CartService

@@ -25,6 +25,10 @@ const CartController ={
         CartService.clearCartUser((req as RequestUserData).userData.id)
         ControllerResponse(statusCodes.OK,res)(null)
     },
-    // TODO: Delete One Product from cart
+    deleteOneProductCart: (req: Request, res: Response, next: NextFunction)=>{
+        CartService.deleteOneProduct((req as RequestUserData).userData.id,req.body)
+        .then( ControllerResponse(statusCodes.OK,res) )
+        .catch(next)
+    },
 }
 export default CartController
