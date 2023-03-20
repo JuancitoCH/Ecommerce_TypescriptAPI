@@ -5,7 +5,8 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import TestStripe from '../pages/TestStripe';
-import Login from '../pages/login';
+import TestStripeCart from '../pages/TestStripeCart';
+import Login from '../pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/stripe',
     element: <TestStripe />
+  },
+  {
+    path: '/stripe/cart',
+    element: <TestStripeCart />
   },
   {
     path:"/login",

@@ -7,6 +7,7 @@ A tener en cuenta, typescript se confunde en algunas condiciones y en los switch
 
 
 ## Todo
+- Al pagar el carrito no me actualiza el estado de sale
 - añadir un campo booleano en sales para saber si se realizo el pago o no
 - al pagar carrito verificar que la cantidad que pide el usuario no supere al stock disponible
 - Guardar la informacion del usuario en el req
