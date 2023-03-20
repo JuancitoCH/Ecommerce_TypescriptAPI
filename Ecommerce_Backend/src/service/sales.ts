@@ -94,7 +94,7 @@ const SalesService = {
     },
 
     async payCart(idUser: string) {
-        const cart = await CartService.getUserCart({ id_user: idUser })
+        const cart = await CartService.getUserCart({},{id:idUser})
         if (!cart.products || !(cart.products as Prisma.JsonArray)[0]) throw new ErrorStatus("validation Cart : User dont have any products on the cart", statusCodes.UNAHUTORIZED);
         const paymentData = {
             description: "",

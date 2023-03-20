@@ -10,6 +10,7 @@ import productRouter from './routes/products.routes'
 import payRouter from './routes/pay.routes'
 
 import cors from 'cors'
+import cartRouter from './routes/cart.routes'
 
 const app = express()
 //middelwares
@@ -25,6 +26,7 @@ app.use('/user',userRouter)
 app.use('/auth',authRouter)
 app.use('/products',productRouter)
 app.use('/pay',payRouter)
+app.use('/cart',cartRouter)
 
 
 // Error Handlers

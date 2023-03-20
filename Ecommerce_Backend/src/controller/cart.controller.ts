@@ -1,41 +1,30 @@
-import { Prisma } from "@prisma/client";
-import prisma from "../config/db";
-import Dbrepository from "../interfaces/dbRepository";
-import {TagsInterface ,TagsInterfaceOptional} from "../interfaces/tables";
+import { Request, Response, NextFunction } from "express"
+import CartService from "../service/cart";
+import { RequestUserData } from "../middlewares/auth";
+import { ControllerResponse } from "../helpers/statusResponse";
+import statusCodes from "../helpers/statusResponse";
 
+const CartController ={
 
-export default class tagsRepository implements Dbrepository{
-
-    async create(data: TagsInterface): Promise<TagsInterface> { 
-        
-        // mi mente no comprende por que poronga no funciona bien esta cagada
-        return await prisma.tags.create({
-            data
-        })
-    }
-    async getOne(tagsData:TagsInterfaceOptional):Promise< TagsInterface | null>{
-        return await prisma.tags.findFirst({
-            where:{
-                ...tagsData
-            }
-        })
-    }
-    async getAll():Promise< TagsInterface[] | null>{
-        return await prisma.tags.findMany()
-    }
-    async deleteOne(tagsData:TagsInterface):Promise< TagsInterface | null>{
-        return await prisma.tags.delete({
-            where:{
-                ...tagsData
-            }
-        })
-    }
-    async updateOne(tagsData:TagsInterface,data:TagsInterfaceOptional):Promise< TagsInterface | null>{
-        return await prisma.tags.update({
-            where:{
-                ...tagsData
-            },
-            data
-        })
-    }
+    create: (req: Request, res: Response, next: NextFunction)=>{
+        CartService.create(req.body, { id :(req as RequestUserData).userData.id } )
+        .then( ControllerResponse(statusCodes.OK,res) )
+        .catch(next)
+    },
+    get: (req: Request, res: Response, next: NextFunction)=>{
+        CartService.getUserCart({}, { id :(req as RequestUserData).userData.id } )
+        .then( ControllerResponse(statusCodes.OK,res) )
+        .catch(next)
+    },
+    addProduct: (req: Request, res: Response, next: NextFunction)=>{
+        CartService.addProduct((req as RequestUserData).userData.id,req.body)
+        .then( ControllerResponse(statusCodes.OK,res) )
+        .catch(next)
+    },
+    clearCart: (req: Request, res: Response, next: NextFunction)=>{
+        CartService.clearCartUser((req as RequestUserData).userData.id)
+        ControllerResponse(statusCodes.OK,res)(null)
+    },
+    // TODO: Delete One Product from cart
 }
+export default CartController
