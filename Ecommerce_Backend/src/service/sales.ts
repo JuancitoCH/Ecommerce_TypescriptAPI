@@ -57,7 +57,8 @@ const SalesService = {
             description: "",
             amount: 0,
             metadata: {
-                sale: ""
+                sale: "",
+                idUser:""
             }
         };
         if (!productData) throw new ErrorStatus("Invalid Products : you must include field product with at least id and quantity field", statusCodes.BADREQUEST)
@@ -87,6 +88,7 @@ const SalesService = {
         })
         // TODO: verificar la informacion de sale y lanzar error de ser necesario
         paymentData.metadata.sale = saleInfo.id ? saleInfo.id : "Error";
+        paymentData.metadata.idUser = idUser;
         return paymentData
 
     },
@@ -95,7 +97,8 @@ const SalesService = {
             description: "",
             amount: 0,
             metadata: {
-                sale: ""
+                sale: "",
+                idUser:""
             }
         };
         const productsArrayFinalDetails:Array<{
@@ -140,7 +143,8 @@ const SalesService = {
         })
         // TODO: verificar la informacion de sale y lanzar error de ser necesario
         paymentData.metadata.sale = saleInfo.id ? saleInfo.id : "Error";
-        CartService.clearCartUser(idUser)
+        paymentData.metadata.idUser = idUser;
+        // CartService.clearCartUser(idUser)
         return paymentData
 
     },
@@ -194,7 +198,7 @@ const SalesService = {
         const paied = await this.update(idSale, {
             statusPay: true
         })
-        console.log(paied)
+        // console.log(paied)
     }
 }
 

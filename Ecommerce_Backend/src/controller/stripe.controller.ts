@@ -6,6 +6,7 @@ import { ErrorStatus } from "../errors/ErrorStatus";
 
 import SalesService from "../service/sales";
 import { RequestUserData } from "../middlewares/auth";
+import CartService from "../service/cart";
 const stripe = new stripeImport(envs.stripe_sk as string,{apiVersion:"2022-11-15"});
 
 // REORGANIZAR TODO QUE ES UN DESASTRE
@@ -38,12 +39,13 @@ export const stripeController = {
                 "payment_intent.succeeded":()=>{console.log("pago Realizado correctamente")},
                 "payment_intent.created":()=>{console.log("Intento de creacion de pago creada")},
                 "charge.succeeded":async ()=>{
-                    console.log(stripe_body)
+                    // console.log(stripe_body)
                     console.log("Charge success")
                     // detalles del cliente
-                    console.log(stripe_body.data.object.billing_details)
+                    // console.log(stripe_body.data.object.billing_details)
                     // detalle del producto
-                    console.log(stripe_body.data.object.metadata)
+                    // console.log(stripe_body.data.object.metadata)
+                    await CartService.clearCartUser(stripe_body.data.object.metadata.idUser)
                     await SalesService.salePaied(stripe_body.data.object.metadata.sale)
                 },
             }

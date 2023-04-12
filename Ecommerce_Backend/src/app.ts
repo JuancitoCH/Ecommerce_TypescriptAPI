@@ -8,9 +8,10 @@ import initRouter from './routes/init.routes'
 import userRouter from './routes/user.routes'
 import productRouter from './routes/products.routes'
 import payRouter from './routes/pay.routes'
+import cartRouter from './routes/cart.routes'
+import salesRouter from './routes/sales.routes'
 
 import cors from 'cors'
-import cartRouter from './routes/cart.routes'
 
 const app = express()
 //middelwares
@@ -27,6 +28,7 @@ app.use('/auth',authRouter)
 app.use('/products',productRouter)
 app.use('/pay',payRouter)
 app.use('/cart',cartRouter)
+app.use('/sales',salesRouter)
 
 
 // Error Handlers

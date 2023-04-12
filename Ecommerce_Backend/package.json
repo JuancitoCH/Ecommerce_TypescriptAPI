@@ -8,7 +8,8 @@
     "start": "tsc && dotenv -e .env.production -- node ./dist/src/index.js",
     "dev": "dotenv -e .env.development -- tsnd --respawn src/index.ts",
     "generate:mongo": "npx prisma generate",
-    "str_triger_sale":"stripe trigger charge.succeeded --add charge:metadata.sale=IDsALE"
+    "str_triger_sale":"stripe trigger charge.succeeded --add charge:metadata.sale=IDsALE",
+    "str_listen":"stripe listen --forward-to localhost:4000/pay/stripe/webhook"
   },
   "repository": {
     "type": "git",
