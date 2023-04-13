@@ -28,6 +28,11 @@ export const productController = {
             .then( ControllerResponse(statusCodes.CREATED,res) )
             .catch(next)
     },
+    increaseStock: (req: Request, res: Response, next: NextFunction) => {
+        ProductsService.updateIncreaseStock(req.params.idProduct, parseInt(req.params.number))
+            .then( ControllerResponse(statusCodes.CREATED,res) )
+            .catch(next)
+    },
     
     
     

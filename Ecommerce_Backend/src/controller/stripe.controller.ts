@@ -36,7 +36,7 @@ export const stripeController = {
             console.log("-------------")
 
             const StripeEventHandler={
-                "payment_intent.succeeded":()=>{console.log("pago Realizado correctamente")},
+                "payment_intent.succeeded":()=>{console.log("intento de pago Realizado correctamente")},
                 "payment_intent.created":()=>{console.log("Intento de creacion de pago creada")},
                 "charge.succeeded":async ()=>{
                     // console.log(stripe_body)
@@ -45,8 +45,10 @@ export const stripeController = {
                     // console.log(stripe_body.data.object.billing_details)
                     // detalle del producto
                     // console.log(stripe_body.data.object.metadata)
+                    // TODO: Verificar que el stock este disponible aun
                     await CartService.clearCartUser(stripe_body.data.object.metadata.idUser)
                     await SalesService.salePaied(stripe_body.data.object.metadata.sale)
+                    await SalesService.salePaiedUpdateStock(stripe_body.data.object.metadata.sale)
                 },
             }
             getProperty(StripeEventHandler,stripe_body.type)()

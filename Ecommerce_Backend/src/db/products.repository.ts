@@ -57,6 +57,27 @@ class ProductsRepository implements  Dbrepository{
             data,
         })
     }
+    // TODO: implementar opciones para que eliga si quiere incrementar o disminuir stock
+    async updateDecreaseStock(productToUp:ProductsInterfaceOptional,decrease:number):Promise< ProductsInterface | null>{
+        return await prisma.products.update({
+            where:{
+                ...productToUp
+            },
+            data:{
+                stock:{decrement:decrease}
+            }
+        })
+    }
+    async updateIncreaseStock(productToUp:ProductsInterfaceOptional,increment:number):Promise< ProductsInterface | null>{
+        return await prisma.products.update({
+            where:{
+                ...productToUp
+            },
+            data:{
+                stock:{increment:increment}
+            }
+        })
+    }
 }
 
 export default ProductsRepository

@@ -51,8 +51,10 @@ const CartService = {
 
         await Promise.all(data.map(async(prod) => {
             try{
-                await ProductsService.getOne({id:prod.productId})
+                const productInfo = await ProductsService.getOne({id:prod.productId})
+                if(productInfo.stock<prod.quantity) throw new ErrorStatus(`Validation Cart : Product "${prod.productId}" not stock available`)
             }catch(e){
+                if((e as ErrorStatus).message.includes('stock'))throw e
                 throw new ErrorStatus(`Validation Cart : Product "${prod.productId}" not found`)
             }
         }))

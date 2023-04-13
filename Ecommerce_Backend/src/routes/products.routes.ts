@@ -12,6 +12,7 @@ productRouter.get('/',productController.getFilterPagination)
 // params replace = yes
 // {{url}}/products/update/idProduct?replace=yes
 productRouter.get('/one/:idProduct',productController.getOneByID)
+productRouter.get('/increase/:idProduct/:number',isAdmin,productController.increaseStock)
 
 
 export default productRouter

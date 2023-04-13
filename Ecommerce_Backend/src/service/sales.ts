@@ -9,6 +9,7 @@ import ProductsService from "./products"
 
 // tenemos que verificar que las operaciones de creacion fueron correctas
 // y manejar los errores que surjan
+
 const SalesService = {
     query: new SalesRepository(),
 
@@ -82,7 +83,7 @@ const SalesService = {
             details: paymentData.description,
             id_user: idUser,
             products: [{
-                id_Products: productDetails.id,
+                productId: productDetails.id,
                 quantity: productData.quantity
             }]
         })
@@ -102,7 +103,7 @@ const SalesService = {
             }
         };
         const productsArrayFinalDetails:Array<{
-            id_Products:string,
+            productId:string,
             quantity:number
         }> = []
         const cartData = await CartService.getUserCart({}, { id: idUser })
@@ -127,7 +128,7 @@ const SalesService = {
 
             
             productsArrayFinalDetails.push({
-                id_Products: productDetails.id as string,
+                productId: productDetails.id as string,
                 quantity: prod.quantity
             })
         }));
@@ -194,11 +195,19 @@ const SalesService = {
     // },
     async salePaied(idSale: string) {
         // cuando stripe change.succeded cambiamos el valor booleano de la venta
-        // TODO:-----------------------
         const paied = await this.update(idSale, {
             statusPay: true
         })
-        // console.log(paied)
+    },
+    async salePaiedUpdateStock(idSale: string) {
+        // cuando stripe change.succeded cambiamos el valor booleano de la venta
+        // TODO:-----------------------
+        const paied = await this.getOne({id:idSale})
+        // usar la interface de sale al guardar
+        const products = paied?.products as unknown as { productId:string,quantity:number }[]
+        products.forEach(async prodData => {
+            await ProductsService.updateDecreaseStock(prodData.productId,prodData.quantity)
+        });
     }
 }
 

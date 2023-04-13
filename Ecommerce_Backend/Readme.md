@@ -9,8 +9,9 @@ A tener en cuenta, typescript se confunde en algunas condiciones y en los switch
 
 
 ## Todo
-- al pagar carrito verificar que la cantidad que pide el usuario no supere al stock disponible
-- al pagar tanto carrito como producto, disminuir el stock del mismo
+-al pagar y verificar que el stock este disponible, si no lo esta y se pago, devolver el dinero
+- al pagar verificar que la cantidad que pide el usuario no supere al stock disponible
+
 - Service for sales ( ruta para consultar mis pedidos )
 - seguir un pago que aun no se completo
 - Service for tags
@@ -36,4 +37,4 @@ A tener en cuenta, typescript se confunde en algunas condiciones y en los switch
 - al usuario chargesucceded impactar la venta en sales
 - Pensar en si es mejor tener el carrito en el schema del usuario o separado del mismo
 - hacer el paymentIntent compatible con el Carrito ( al charge succeded limpiar carrito del usuario )
-- 
+- al pagar tanto carrito como producto, disminuir el stock del mismo

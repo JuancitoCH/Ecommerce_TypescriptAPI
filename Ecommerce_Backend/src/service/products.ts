@@ -93,6 +93,13 @@ const ProductsService = {
         const product = await this.query.updateOne(productToUp,data)
         return product
     },
+    async updateDecreaseStock(idProduct:string,number:number){
+        return await this.query.updateDecreaseStock({id:idProduct},number)
+    },
+    async updateIncreaseStock(idProduct:string,number:number){
+        if(Number.isNaN(number)) throw new ErrorStatus('You must include a valid number',statusCodes.BADREQUEST)
+        return await this.query.updateIncreaseStock({id:idProduct},number)
+    },
 }
 
 export default ProductsService
