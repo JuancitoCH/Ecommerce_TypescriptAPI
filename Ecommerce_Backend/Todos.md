@@ -2,24 +2,22 @@ Change, send the tag as an array para guardar y verificar nuevos tags
 A tener en cuenta, typescript se confunde en algunas condiciones y en los switch si no agregamos {} o ;
 <!--  stripe listen --forward-to localhost:4000/pay/stripe/webhook -->
 ## Todo Tests
-- PROBAR LO DEL STOCK
 
 ## Todo
 - al agregar el mismo producto al carrito aumentar el numero del que ya esta, no agregar uno nuevo
-- al pagar y verificar que el stock este disponible, si no lo esta y se pago, devolver el dinero
-- al pagar verificar que la cantidad que pide el usuario no supere al stock disponible
+
 - seguir un pago que aun no se completo
 - Service for tags
 
-- ver como sera el reconocimiento del pedido del usuario( YASE ) cuando creamos el intento de pago creamos un pedido con todos los detalles, enviamos como metadata el id del pedido y este estara en "Modo no pagado" , guardamos la fecha del pedido y si al final del dia no fue efectivo lanzamos un evento que elimine todos los pedidos no pagados ( O LOS CONSERVAMOS COMO INFORMACION ?) Stripe guarda el payment intent creation o lo aprovechamos o lo implementamos
 - 
 - Enviar Emails de verificacion a las cuentas al momento de registrarse
-- implementar la devolucion de dinero en un plazo de x dias? negocio no real asi que por ahora no
+- implementar la cancelacion de pedidos, devolucion de dinero en un plazo de x dias? negocio no real asi que por ahora no
 - añadir sigin con Google / Facebook / Github . Oauth2
 - 
 ## Finish
+- al pagar y verificar que el stock este disponible, si no lo esta y se pago, devolver el dinero
+- al pagar verificar que la cantidad que pide el usuario no supere al stock disponible
 - Service for sales ( ruta para consultar mis pedidos )
-
 - añadir un campo booleano en sales para saber si se realizo el pago o no
 - Al pagar el carrito no me actualiza el estado de sale
 - cambiar nombre de las rutas de pago a pay/stripe/...
