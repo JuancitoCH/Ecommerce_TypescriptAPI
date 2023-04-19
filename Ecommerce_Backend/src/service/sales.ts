@@ -31,17 +31,23 @@ const SalesService = {
     async getAll() {
         return { result: await this.query.getAll() }
     },
+    async getAllUser(idUser:string) {
+        return { result: await this.query.getAll({
+            id_user:idUser
+        }) }
+    },
     // only admins
     async update(idSale: string, data: SalesInterfaceOptional) {
+        console.log(data.information)
         if (
             !data.products &&
             !data.amount &&
             !data.details &&
-            !data.statusPay
+            !data.statusPay &&
+            !data.information
         ) {
             throw new ErrorStatus("validation Sales : You Must include at least one field", statusCodes.BADREQUEST)
         }
-
         return await this.query.updateOne({ id: idSale }, data)
     },
     async deleteOne(idSale: string) {
@@ -193,18 +199,29 @@ const SalesService = {
     //     CartService.clearCartUser(idUser)
     //     return paymentData
     // },
-    async salePaied(idSale: string) {
+    async salePaied(idSale: string,statusPay=true) {
         // cuando stripe change.succeded cambiamos el valor booleano de la venta
-        const paied = await this.update(idSale, {
-            statusPay: true
+        return await this.update(idSale, {
+            statusPay
         })
     },
     async salePaiedUpdateStock(idSale: string) {
-        // cuando stripe change.succeded cambiamos el valor booleano de la venta
-        // TODO:-----------------------
         const paied = await this.getOne({id:idSale})
-        // usar la interface de sale al guardar
         const products = paied?.products as unknown as { productId:string,quantity:number }[]
+        // verificamos que el stock este disponible
+        const productMap:any = {}
+        await Promise.all( products.map(async prodData => {
+            const productInfo = await ProductsService.getOne({id:prodData.productId});
+            if(!(prodData.productId in productMap)) productMap[prodData.productId]=productInfo.stock
+            if((productMap[prodData.productId] - prodData.quantity )>=0){
+                productMap[prodData.productId] = productMap[prodData.productId] - prodData.quantity
+                return true;
+            }
+            else
+            {
+                throw new ErrorStatus("Invalid Sale: Product stock not available");
+            }
+        }) );
         products.forEach(async prodData => {
             await ProductsService.updateDecreaseStock(prodData.productId,prodData.quantity)
         });

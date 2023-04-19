@@ -46,7 +46,8 @@ export interface SalesInterface {
     products: Prisma.JsonValue | Prisma.InputJsonValue  ,
     details: string,
     amount: number,
-    statusPay?: boolean
+    statusPay?: boolean,
+    information?:string | null
 }
 
 export interface SalesInterfaceOptional {
@@ -56,7 +57,8 @@ export interface SalesInterfaceOptional {
     products?: Prisma.JsonFilter ,
     details?: string,
     amount?: number,
-    statusPay?: boolean
+    statusPay?: boolean,
+    information?:string | null
 }
 export interface TagsInterface {
     id?: string,

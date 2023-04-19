@@ -48,6 +48,8 @@ model Sales{
   details String
   amount Float
   statusPay Boolean @default(false)
+  information String?
+
   user User @relation(fields: [id_user], references: [id])
 }
 

@@ -25,8 +25,12 @@ export default class SalesRepository implements Dbrepository{
             },
         })
     }
-    async getAll():Promise< SalesInterface[] | null>{
-        return await prisma.sales.findMany()
+    async getAll(filter:SalesInterfaceOptional={}):Promise< SalesInterface[] | null>{
+        return await prisma.sales.findMany({
+            where:{
+                ...filter
+            }
+        })
     }
     async deleteOne(salesData:SalesInterfaceOptional):Promise< SalesInterface | null>{
         return await prisma.sales.delete({

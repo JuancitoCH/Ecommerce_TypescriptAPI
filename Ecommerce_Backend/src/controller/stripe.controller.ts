@@ -1,13 +1,10 @@
 import { Request, Response, NextFunction } from "express"
-import envs from "../config/envs";
-import statusCodes, { ControllerResponse } from "../helpers/statusResponse";
-import stripeImport from "stripe"
-import { ErrorStatus } from "../errors/ErrorStatus";
-
+import stripe,{createRefund} from "../libs/stripe";
 import SalesService from "../service/sales";
 import { RequestUserData } from "../middlewares/auth";
 import CartService from "../service/cart";
-const stripe = new stripeImport(envs.stripe_sk as string,{apiVersion:"2022-11-15"});
+import { ErrorStatus } from "../errors/ErrorStatus";
+
 
 // REORGANIZAR TODO QUE ES UN DESASTRE
 
@@ -48,9 +45,28 @@ export const stripeController = {
                     // TODO: Verificar que el stock este disponible aun
                     await CartService.clearCartUser(stripe_body.data.object.metadata.idUser)
                     await SalesService.salePaied(stripe_body.data.object.metadata.sale)
-                    await SalesService.salePaiedUpdateStock(stripe_body.data.object.metadata.sale)
+                    // gestionamos el stock y devolvemos el dinero si el stock queda en negativo
+                    try{
+                      await SalesService.salePaiedUpdateStock(stripe_body.data.object.metadata.sale)
+                    }catch(e){
+                      try{
+                        let information = 'Server Error';
+                        if((e as unknown as ErrorStatus).message.includes('stock')) {
+                          information = "Stock of products not availabel, the refound must be confirmed, sorry for the inconvinient if an error ocurres please contact us";
+                        }
+                        await SalesService.update(stripe_body.data.object.metadata.sale,{
+                          information:information,
+                          statusPay:false
+                        });
+                        await createRefund(stripe_body.data.object.id,stripe_body.data.object.amount);
+                      }catch(e){
+                        throw e
+                      }
+                    }
                 },
             }
+            // Hacer un switch pa
+            console.log(stripe_body.type)
             getProperty(StripeEventHandler,stripe_body.type)()
             // (StripeEventHandler)[stripe_body.type as string]    
             return res.end()
