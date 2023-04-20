@@ -12,6 +12,7 @@ import cartRouter from './routes/cart.routes'
 import salesRouter from './routes/sales.routes'
 
 import cors from 'cors'
+import TagRouter from './routes/tags.routes'
 
 const app = express()
 //middelwares
@@ -29,6 +30,7 @@ app.use('/products',productRouter)
 app.use('/pay',payRouter)
 app.use('/cart',cartRouter)
 app.use('/sales',salesRouter)
+app.use('/tags',TagRouter)
 
 
 // Error Handlers

@@ -1,41 +1,23 @@
-import { Prisma } from "@prisma/client";
-import prisma from "../config/db";
-import Dbrepository from "../interfaces/dbRepository";
-import {TagsInterface ,TagsInterfaceOptional} from "../interfaces/tables";
+import { Request, Response, NextFunction } from "express"
+import statusCodes, { ControllerResponse } from "../helpers/statusResponse";
+import TagsService from "../service/tags";
 
 
-export default class tagsRepository implements Dbrepository{
 
-    async create(data: TagsInterface): Promise<TagsInterface> { 
-        
-        // mi mente no comprende por que poronga no funciona bien esta cagada
-        return await prisma.tags.create({
-            data
-        })
-    }
-    async getOne(tagsData:TagsInterfaceOptional):Promise< TagsInterface | null>{
-        return await prisma.tags.findFirst({
-            where:{
-                ...tagsData
-            }
-        })
-    }
-    async getAll():Promise< TagsInterface[] | null>{
-        return await prisma.tags.findMany()
-    }
-    async deleteOne(tagsData:TagsInterface):Promise< TagsInterface | null>{
-        return await prisma.tags.delete({
-            where:{
-                ...tagsData
-            }
-        })
-    }
-    async updateOne(tagsData:TagsInterface,data:TagsInterfaceOptional):Promise< TagsInterface | null>{
-        return await prisma.tags.update({
-            where:{
-                ...tagsData
-            },
-            data
-        })
-    }
+export const TagController = {
+    create: (req: Request, res: Response, next: NextFunction) => {
+        TagsService.create(req.body)
+            .then( ControllerResponse(statusCodes.CREATED,res) )
+            .catch(next)
+    },
+    getAll: (req: Request, res: Response, next: NextFunction) => {
+        TagsService.getAll()
+            .then( ControllerResponse(statusCodes.OK,res) )
+            .catch(next)
+    },
+    update: (req: Request, res: Response, next: NextFunction) => {
+        TagsService.update(req.params.id,req.body)
+            .then( ControllerResponse(statusCodes.OK,res) )
+            .catch(next)
+    },
 }
