@@ -4,17 +4,16 @@ A tener en cuenta, typescript se confunde en algunas condiciones y en los switch
 ## Todo Tests
 
 ## Todo
-- al agregar el mismo producto al carrito aumentar el numero del que ya esta, no agregar uno nuevo
-
 - seguir un pago que aun no se completo
 - Service for tags
 
-- 
 - Enviar Emails de verificacion a las cuentas al momento de registrarse
 - implementar la cancelacion de pedidos, devolucion de dinero en un plazo de x dias? negocio no real asi que por ahora no
 - añadir sigin con Google / Facebook / Github . Oauth2
 - 
 ## Finish
+- al armar carrito completo preguntar si por cada producto el mismo esta disponible y el stock alcanza
+- al agregar el mismo producto al carrito aumentar el numero del que ya esta, no agregar uno nuevo
 - al pagar y verificar que el stock este disponible, si no lo esta y se pago, devolver el dinero
 - al pagar verificar que la cantidad que pide el usuario no supere al stock disponible
 - Service for sales ( ruta para consultar mis pedidos )
