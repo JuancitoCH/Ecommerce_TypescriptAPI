@@ -5,8 +5,8 @@ export default function NavMenu() {
     <nav>
         <div className="left_nav">
             <div>---</div>
-            <a href="">flavors</a>
-            <a href="">products</a>
+            <Link to="/">flavors</Link>
+            <Link to="/">products</Link>
         </div>
         <h1>
             <Link to="/">Heladinos</Link>
